@@ -9,9 +9,7 @@ class Solution {
             } else {
                 low = mid + 1;
             }
-            if(low == high){
-                return low;
-            }
+           
         }
         return low;
     }
