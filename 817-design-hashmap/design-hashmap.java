@@ -1,71 +1,62 @@
+class Node{
+    int key;
+    int val;
+    Node next;
+    Node(int key,int val){
+        this.key = key;
+        this.val = val;
+        this.next = null;
+    }
+}
 class MyHashMap {
-
-    class Node {
-        int key;
-        int value;
-
-        Node(int key, int value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
-    private int N = 1000;
-    private LinkedList<Node>[] buckets;
-
+    private Node[] map;
     public MyHashMap() {
-        buckets = new LinkedList[N];
-
-        for (int i = 0; i < N; i++) {
-            buckets[i] = new LinkedList<>();
+        map = new Node[1000];
+        for(int i=0;i<1000;i++){
+            map[i] = new Node(-1,-1);
         }
     }
-
-    private int hashFunction(int key) {
-        return key % N;
-    }
-
-    private int searchInBucket(int key, int bi) {
-        LinkedList<Node> bucket = buckets[bi];
-
-        for (int i = 0; i < bucket.size(); i++) {
-            if (bucket.get(i).key == key) {
-                return i;
+    
+    public void put(int key, int value) {
+        int hash = hash(key);
+        Node curr = map[hash];
+        while(curr.next != null){
+            if(curr.next.key == key){
+                curr.next.val = value;
+                return;
             }
+            curr = curr.next;
         }
-
+        curr.next = new Node(key,value);
+    }
+    
+    public int get(int key) {
+        int hash = hash(key);
+        Node curr = map[hash].next;
+        while(curr != null){
+            if(curr.key == key){
+                return curr.val;
+            }
+            curr = curr.next;
+        }
         return -1;
     }
-
-    public void put(int key, int value) {
-        int bi = hashFunction(key);
-        int di = searchInBucket(key, bi);
-
-        if (di == -1) {
-            buckets[bi].add(new Node(key, value));
-        } else {
-            buckets[bi].get(di).value = value;
-        }
-    }
-
-    public int get(int key) {
-        int bi = hashFunction(key);
-        int di = searchInBucket(key, bi);
-
-        if (di == -1) {
-            return -1;
-        }
-
-        return buckets[bi].get(di).value;
-    }
-
+    
     public void remove(int key) {
-        int bi = hashFunction(key);
-        int di = searchInBucket(key, bi);
+        int hash = hash(key);
+        Node curr = map[hash];
 
-        if (di != -1) {
-            buckets[bi].remove(di);
+        while(curr.next != null){
+            if(curr.next.key == key){
+                curr.next = curr.next.next;
+                return;
+            }
+            curr = curr.next;
         }
+    }
+
+    private int hash(int key){
+        return key%1000;
     }
 }
 
