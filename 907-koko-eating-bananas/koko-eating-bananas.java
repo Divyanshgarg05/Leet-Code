@@ -27,7 +27,7 @@ class Solution {
         long totalHours = 0; // FIXED
 
         for (int pile : piles) {
-            totalHours += (pile + k - 1) / k; // FIXED
+            totalHours += (long)Math.ceil((double)pile/(double)k); // FIXED
 
             if (totalHours > h) return false; // optimization
         }
