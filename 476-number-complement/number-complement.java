@@ -1,13 +1,15 @@
 class Solution {
     public int findComplement(int num) {
-        if (num == 0) return 1;
-
-        int bitLength = Integer.toBinaryString(num).length();
-        
-        int mask = (1 << bitLength) - 1;
-        
-        return num ^ mask;
-
+        String bin = Integer.toBinaryString(num);
+        StringBuilder res = new StringBuilder();
+        for(int i=0;i<bin.length();i++){
+            if(bin.charAt(i) == '0'){
+                res.append("1");
+            }else{
+                res.append("0");
+            }
+        }
+    return Integer.parseInt(res.toString(),2);
         
     }
 }
