@@ -1,21 +1,21 @@
 class Solution {
     public void sortColors(int[] nums) {
-        int low = 0;
-        int mid = 0;
-        int high = nums.length-1;
-        while(mid <= high){
-            if(nums[mid] == 0){
-                int temp = nums[low];
-                nums[low++] = nums[mid];
-                nums[mid++] = temp;
-            } else if(nums[mid] == 1){
-                mid ++;
-            } else{
-                int temp = nums[mid];
-                nums[mid] = nums[high];
-                nums[high--] = temp;
-            }
+        HashMap<Integer, Integer> count = new HashMap<>();
+        count.put(0, 0);
+        count.put(1, 0);
+        count.put(2, 0);
+
+        for (int num : nums) {
+            count.put(num, count.get(num) + 1);
         }
-        
+
+        int idx = 0;
+        for (int color = 0; color < 3; color++) {
+            int freq = count.get(color);
+            for (int j = 0; j < freq; j++) {
+                nums[idx] = color;
+                idx++;
+            }
+        }        
     }
 }
